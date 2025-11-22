@@ -2,93 +2,139 @@
 <html lang="en">
 
 <head>
-  <meta charset="UTF-8">
-  <title>Vibin's Result Page</title>
-  <link rel="icon" href="resources/download-removebg-preview.png" type="image/x-icon">
-  <style>
-    body {
-      font-family: Arial, sans-serif;
-      background: linear-gradient(135deg, #6dd5fa, #ff00d9);
-      color: #333;
-      height: 100vh;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-    }
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Vibin's Dashboard Login</title>
+    <link rel="icon" href="resources/download-removebg-preview.png" type="image/x-icon">
+    <style>
+        /* General Styles matching Dashboard background */
+        body {
+            font-family: 'Segoe UI', Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background: #f8f9fa; /* Light grey background from dashboard */
+            color: #222;
+            height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
 
-    .box {
-      background: #99ff00;
-      padding: 30px;
-      border-radius: 15px;
-      box-shadow: 0 0 15px rgba(223, 15, 15, 0.3);
-      text-align: center;
-      width: 320px;
-    }
+        /* Login Box Styling matching Dashboard Containers */
+        .login-box {
+            background: #fff; /* White background from dashboard containers */
+            padding: 40px;
+            border-radius: 10px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1); /* Subtle shadow */
+            text-align: center;
+            width: 90%;
+            max-width: 350px; /* Max width for responsiveness */
+            transition: box-shadow 0.3s ease;
+        }
+        
+        .login-box:hover {
+            box-shadow: 0 6px 16px rgba(0, 0, 0, 0.15);
+        }
 
-    input {
-      width: 90%;
-      padding: 10px;
-      margin: 10px 0;
-      border-radius: 5px;
-      border: 1px solid #6d0000;
-    }
+        .login-box h2 {
+            color: #003ffe; /* Blue color from dashboard header */
+            margin-bottom: 25px;
+            font-size: 1.8em;
+        }
+        
+        /* Logo Styling */
+        .logo {
+            width: 80px;
+            height: auto;
+            margin-bottom: 15px;
+        }
 
-    button {
-      background: #ff0000;
-      color: white;
-      border: none;
-      padding: 10px 20px;
-      border-radius: 5px;
-      cursor: pointer;
-    }
+        input {
+            width: 100%; /* Full width within the box */
+            box-sizing: border-box; /* Include padding and border in the element's total width and height */
+            padding: 12px;
+            margin: 10px 0;
+            border-radius: 6px;
+            border: 1px solid #d1d5db; /* Light grey border */
+            font-size: 1em;
+            transition: border-color 0.3s;
+        }
+        
+        input:focus {
+            border-color: #003ffe;
+            outline: none; /* Remove default focus outline */
+        }
 
-    button:hover {
-      background: #03beed;
-    }
+        button {
+            background: #007bff; /* Primary blue color (like the menu buttons) */
+            color: white;
+            border: none;
+            padding: 12px 25px;
+            border-radius: 6px;
+            cursor: pointer;
+            font-size: 1.1em;
+            margin-top: 15px;
+            width: 100%;
+            transition: background 0.3s;
+        }
 
-    #error {
-      color: red;
-      margin-top: 10px;
-    }
-  </style>
+        button:hover {
+            background: #0056b3; /* Darker blue on hover */
+        }
+
+        #error {
+            color: #d32f2f; /* Red for errors (matching RA color) */
+            margin-top: 15px;
+            font-weight: bold;
+        }
+    </style>
 </head>
 
 <body>
-  <div class="box">
-    <h2>Vibin's Result Page</h2>
-    <form id="loginForm">
-      <input type="text" id="reg" placeholder="Register Number">
-      <input type="date" id="dob">
-      <button type="submit">Login</button>
-    </form>
-    <p id="error"></p>
-  </div>
+    <div class="login-box">
+        <img src="resources/download-removebg-preview.png" alt="Logo" class="logo">
+        <h2>Vibin's Dashboard Login</h2>
+        <form id="loginForm">
+            <input type="text" id="reg" placeholder="Register Number" required>
+            <input type="date" id="dob" required>
+            <button type="submit">Login</button>
+        </form>
+        <p id="error"></p>
+    </div>
 
-  <script>
-    window.history.pushState(null, "", window.location.href);
-    window.onpopstate = function () {
-      window.location.href = "home.html";
-    };
-    function checkLogin(e) {
-      if (e) e.preventDefault(); // Prevent form reload
-      const reg = document.getElementById("reg").value.trim();
-      const dob = document.getElementById("dob").value;
+    <script>
+        // Security: Prevent users from navigating back to the login page without logging out
+        window.history.pushState(null, "", window.location.href);
+        window.onpopstate = function () {
+            window.location.href = "home.html";
+        };
 
-      const correctReg = "960923104020";
-      const correctDob = "2006-07-29";
+        function checkLogin(e) {
+            if (e) e.preventDefault();
+            
+            const reg = document.getElementById("reg").value.trim();
+            const dob = document.getElementById("dob").value;
 
-      if (reg === correctReg && dob === correctDob) {
-        localStorage.setItem("isLoggedIn", "true");
-        localStorage.setItem("username", "Vibin");
-        window.location.href = "spa.html";
-      } else {
-        document.getElementById("error").textContent = "Invalid Register Number or DOB!";
-      }
-    }
+            // --- Authentication Data ---
+            const correctReg = "960923104020";
+            const correctDob = "2006-07-29";
+            const correctUsername = "Vibin I"; // Use the full name here for the dashboard welcome
 
-    document.getElementById("loginForm").addEventListener("submit", checkLogin);
-    
-  </script>
+            if (reg === correctReg && dob === correctDob) {
+                // Store authentication status and username in Local Storage
+                localStorage.setItem("isLoggedIn", "true");
+                localStorage.setItem("username", correctUsername);
+                
+                // Redirect to the main dashboard page
+                window.location.href = "spa.html"; // Ensure this matches your dashboard file name!
+
+            } else {
+                document.getElementById("error").textContent = "Invalid Register Number or DOB!";
+            }
+        }
+
+        document.getElementById("loginForm").addEventListener("submit", checkLogin);
+    </script>
 </body>
 
 </html>

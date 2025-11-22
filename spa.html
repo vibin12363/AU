@@ -12,7 +12,8 @@
             font-family: 'Segoe UI', Arial, sans-serif;
             margin: 0;
             padding: 0;
-            background: #f8f9fa; /* Light grey background */
+            background: #f8f9fa;
+            /* Light grey background */
             color: #222;
         }
 
@@ -27,7 +28,8 @@
             padding: 15px 24px;
             display: flex;
             align-items: center;
-            justify-content: space-between; /* Space out logo/title and buttons */
+            justify-content: space-between;
+            /* Space out logo/title and buttons */
         }
 
         .logo-title-group {
@@ -39,19 +41,20 @@
         .header-container img {
             width: 80px;
             height: auto;
+            margin-left: 20px;
         }
 
         .header-container h1 {
             color: #003ffe;
             font-size: 1.8em;
-            margin: 0;
+            margin-left: 40px;
         }
 
         .user-welcome {
             text-align: left;
-            padding-left: 10px;
-            font-family: 'Times New Roman', Times, serif;
-            font-size: 1.4em;
+            padding-left: 300px;
+            font-family: serif;
+            font-size: 1.9em;
             font-weight: bold;
             color: #333;
         }
@@ -63,7 +66,8 @@
             align-items: center;
         }
 
-        #printBtn, .logout-btn {
+        #printBtn,
+        .logout-btn {
             padding: 8px 15px;
             font-size: 14px;
             border-radius: 6px;
@@ -73,18 +77,30 @@
         }
 
         #printBtn {
-            background-color: #f0f0f0;
-            color: #333;
+            background-color: #ffffff;
+            color: #000;
+            border: 2px solid #000000;
+            text-decoration: none;
+        }
+
+        #printBtn:hover {
+            background: #000000;
+            color: white;
+            border-color: #000000;
         }
 
         .action-buttons-moved {
             max-width: 1100px;
-            margin: 0 auto; /* Center the container */
+            margin: 0 auto;
+            /* Center the container */
             display: flex;
-            justify-content: flex-end; /* Push content to the right */
+            justify-content: flex-end;
+            /* Push content to the right */
             gap: 10px;
-            padding-right: 24px; /* Align with container padding */
-            margin-top: -30px; /* Optional: Pull buttons up slightly closer to welcome text */
+            padding-right: 24px;
+            /* Align with container padding */
+            margin-top: -30px;
+            /* Optional: Pull buttons up slightly closer to welcome text */
             margin-bottom: 20px;
         }
 
@@ -114,7 +130,8 @@
 
         .menu-btn {
             text-decoration: none;
-            background: #007bff; /* Default blue color */
+            background: #007bff;
+            /* Default blue color */
             color: white;
             padding: 10px 15px;
             border-radius: 8px;
@@ -127,18 +144,20 @@
         }
 
         .menu-btn:hover {
-            background: #a3afbd;
+            background: #869adc;
         }
 
         .menu-btn.active {
-            background: #003ffe; /* Selected color - darker blue */
-            box-shadow: 0 0 10px rgba(0, 63, 254, 0.5);
+            background: #00b2fe;
+            /* Selected color - darker blue */
+            box-shadow: 0 0 13px rgba(7, 67, 245, 0.5);
         }
 
         /* Main Content Area */
         #content-area {
             max-width: 1100px;
-            min-height: 400px; /* Ensure content box is visible */
+            min-height: 400px;
+            /* Ensure content box is visible */
             margin: 20px auto;
             background: #fff;
             border-radius: 10px;
@@ -146,7 +165,7 @@
             padding: 30px;
             text-align: left;
         }
-        
+
         /* Content Box Styling (for results/schedule inside content-area) */
         .content-box {
             padding: 24px;
@@ -155,7 +174,7 @@
             border-radius: 8px;
             box-shadow: 0 1px 4px rgba(0, 0, 0, 0.05);
         }
-        
+
         .content-box h2 {
             text-align: center;
             color: #2d6cdf;
@@ -165,11 +184,25 @@
         /* Result/Schedule Specific Styles */
         .info {
             margin-bottom: 20px;
-            display: flex;
-            flex-wrap: wrap;
-            gap: 10px 30px;
-            font-size: 1em;
+            gap: 0px;
+            font-size: 1.4em;
         }
+
+        .colon1 {
+            margin-left: 150px;
+        }
+
+        .colon2 {
+            margin-left: 33.9px;
+        }
+
+        .colon3 {
+            margin-left: 140px;
+        }
+
+        .regno {
+                margin-left: 30px;
+            }
 
         .info strong {
             color: #444;
@@ -181,7 +214,8 @@
             margin-top: 15px;
         }
 
-        th, td {
+        th,
+        td {
             border: 1px solid #d1d5db;
             padding: 10px 8px;
             text-align: center;
@@ -197,65 +231,100 @@
         }
 
         .ra {
-            color: #d32f2f; /* Red for Re-Appear */
+            color: #d32f2f;
+            /* Red for Re-Appear */
             font-weight: bold;
         }
 
         .pass {
-            color: #388e3c; /* Green for Pass */
+            color: #388e3c;
+            /* Green for Pass */
             font-weight: bold;
         }
 
         /* Responsive Design */
         @media (max-width: 900px) {
-            .header-container, .menu, #content-area {
+
+            .header-container,
+            .menu,
+            #content-area {
                 max-width: 95%;
             }
+
             .header-container {
                 flex-direction: column;
             }
+
             .logo-title-group {
                 margin-bottom: 10px;
             }
+
             .user-welcome {
                 padding-left: 0;
                 text-align: center;
                 margin-bottom: 10px;
             }
-            
+
             .action-buttons-moved {
-                padding-right: 5%; /* Adjust padding for smaller screens */
+                padding-right: 5%;
+                /* Adjust padding for smaller screens */
             }
         }
 
         @media (max-width: 650px) {
-            
+
             .menu {
                 /* We ensure it stays row-based and allows wrapping */
-                flex-direction: row; 
-                flex-wrap: wrap; /* Add this to prevent overflow if they don't all fit */
+                flex-direction: row;
+                flex-wrap: wrap;
+                /* Add this to prevent overflow if they don't all fit */
                 gap: 5px;
             }
-            
+
             .menu-btn {
                 /* Instead of max-width: 100%, let them share the space */
-                padding: 8px 10px; /* Adjust padding to save space */
-                font-size: 0.85em; /* Reduce font size */
+                padding: 8px 10px;
+                /* Adjust padding to save space */
+                font-size: 0.85em;
+                /* Reduce font size */
                 /* Remove max-width so they all try to fit on one line */
             }
 
-            th, td {
+            th,
+            td {
                 font-size: 0.8em;
                 padding: 5px 3px;
             }
+
             .info {
                 flex-direction: column;
                 gap: 10px;
             }
 
             .action-buttons-moved {
-                padding-top: 10%; /* Adjust padding for smaller screens */
+                padding-top: 10%;
+                /* Adjust padding for smaller screens */
 
+            }
+
+            .user-welcome {
+                margin-right: 100px;
+            }
+
+            .colon1 {
+                margin-left: 40px;
+            }
+
+            .colon2 {
+                margin-left: 16.8px;
+            }
+
+            .colon3 {
+                margin-left: 31.8px;
+            }
+
+            .regno {
+                margin-left: 30px;
             }
             /* If the buttons still don't fit horizontally, you must choose 
                between letting them wrap or forcing them to stack. 
@@ -274,15 +343,13 @@
         </div>
     </div>
 
-    <p class="user-welcome" id="user-welcome-text">
-        Welcome **Vibin I** !
-    </p>
+    <p class="user-welcome" id="user-welcome-text"></p>
 
-<div class="action-buttons-moved">
+    <div class="action-buttons-moved">
         <button id="printBtn">🖨️ Print</button>
         <a href="home.html" class="logout-btn" onclick="logout(event)">🚪Logout</a>
     </div>
-    
+
     <div class="menu">
         <div class="menu-btn active" data-content-id="profile">Profile</div>
         <div class="menu-btn" data-content-id="schedule">Exam Schedule</div>
@@ -294,14 +361,13 @@
     <div id="content-area">
         <div id="profile-content" class="content-section">
             <div class="content-box">
-                <h2>👤 Your Profile</h2>
-                <p>Welcome to your academic dashboard. Use the menu above to navigate your results and schedule.</p>
+                <h2>👤 Student Profile</h2>
                 <div class="info">
-                    <div><strong>Register Number:</strong> 960923104020</div>
-                    <div><strong>Name:</strong> VIBIN I</div>
-                    <div><strong>Branch:</strong> B.E. Computer Science and Engineering</div>
+                    <p><b>Name<span class="colon1">:</span></b><span class="regno">Vibin I</span></p>
+                    <p><b>Register Number<span class="colon2">:</span></b><span class="regno">960923104020</span></p>
+                    <p><b>Branch<span class="colon3">:</span></b><span class="regno">B.E. Computer Science and
+                            Engineering</span></p>
                 </div>
-                <p>This section can be expanded to show personal details, attendance records, etc.</p>
             </div>
         </div>
 
@@ -322,25 +388,88 @@
                         </tr>
                     </thead>
                     <tbody>
-                        <tr><td>5</td><td>CB3491</td><td>Cryptography and Cyber Security</td><td>20-Nov-25</td><td>Thu</td><td>F.N.</td></tr>
-                        <tr><td>5</td><td>CS3591</td><td>Computer Networks</td><td>22-Nov-25</td><td>Sat</td><td>F.N.</td></tr>
-                        <tr><td>5</td><td>CS3501</td><td>Compiler Design</td><td>25-Nov-25</td><td>Tue</td><td>F.N.</td></tr>
-                        <tr><td>5</td><td>CS3551</td><td>Distributed Computing</td><td>27-Nov-25</td><td>Thu</td><td>F.N.</td></tr>
-                        <tr><td>5</td><td>CCS375</td><td>Web Technologies</td><td>29-Nov-25</td><td>Sat</td><td>F.N.</td></tr>
-                        <tr><td>5</td><td>CCS341</td><td>Data Warehousing</td><td>5-Dec-25</td><td>Fri</td><td>F.N.</td></tr>
+                        <tr>
+                            <td>5</td>
+                            <td>CB3491</td>
+                            <td>Cryptography and Cyber Security</td>
+                            <td>20-Nov-25</td>
+                            <td>Thu</td>
+                            <td>F.N.</td>
+                        </tr>
+                        <tr>
+                            <td>5</td>
+                            <td>CS3591</td>
+                            <td>Computer Networks</td>
+                            <td>22-Nov-25</td>
+                            <td>Sat</td>
+                            <td>F.N.</td>
+                        </tr>
+                        <tr>
+                            <td>5</td>
+                            <td>CS3501</td>
+                            <td>Compiler Design</td>
+                            <td>25-Nov-25</td>
+                            <td>Tue</td>
+                            <td>F.N.</td>
+                        </tr>
+                        <tr>
+                            <td>5</td>
+                            <td>CS3551</td>
+                            <td>Distributed Computing</td>
+                            <td>27-Nov-25</td>
+                            <td>Thu</td>
+                            <td>F.N.</td>
+                        </tr>
+                        <tr>
+                            <td>5</td>
+                            <td>CCS375</td>
+                            <td>Web Technologies</td>
+                            <td>29-Nov-25</td>
+                            <td>Sat</td>
+                            <td>F.N.</td>
+                        </tr>
+                        <tr>
+                            <td>5</td>
+                            <td>CCS341</td>
+                            <td>Data Warehousing</td>
+                            <td>5-Dec-25</td>
+                            <td>Fri</td>
+                            <td>F.N.</td>
+                        </tr>
                     </tbody>
                 </table>
             </div>
-            
+
             <div class="content-box">
                 <h3 style="text-align:center;">Semester 4 - April / May 2025</h3>
                 <table>
                     <thead>
-                        <tr><th>Sem</th><th>Subject Code</th><th>Subject Name</th><th>Date</th><th>Day</th><th>Session</th></tr>
+                        <tr>
+                            <th>Sem</th>
+                            <th>Subject Code</th>
+                            <th>Subject Name</th>
+                            <th>Date</th>
+                            <th>Day</th>
+                            <th>Session</th>
+                        </tr>
                     </thead>
                     <tbody>
-                        <tr><td>4</td><td>GE3451</td><td>Environmental Sciences and Sustainability</td><td>29-Nov-25</td><td>Sat</td><td>A.N.</td></tr>
-                        <tr><td>4</td><td>CS3492</td><td>Database Management Systems</td><td>01-Dec-25</td><td>Mon</td><td>A.N.</td></tr>
+                        <tr>
+                            <td>4</td>
+                            <td>GE3451</td>
+                            <td>Environmental Sciences and Sustainability</td>
+                            <td>29-Nov-25</td>
+                            <td>Sat</td>
+                            <td>A.N.</td>
+                        </tr>
+                        <tr>
+                            <td>4</td>
+                            <td>CS3492</td>
+                            <td>Database Management Systems</td>
+                            <td>01-Dec-25</td>
+                            <td>Mon</td>
+                            <td>A.N.</td>
+                        </tr>
                     </tbody>
                 </table>
             </div>
@@ -349,10 +478,24 @@
                 <h3 style="text-align:center;">Semester 3 - Nov / Dec 2024</h3>
                 <table>
                     <thead>
-                        <tr><th>Sem</th><th>Subject Code</th><th>Subject Name</th><th>Date</th><th>Day</th><th>Session</th></tr>
+                        <tr>
+                            <th>Sem</th>
+                            <th>Subject Code</th>
+                            <th>Subject Name</th>
+                            <th>Date</th>
+                            <th>Day</th>
+                            <th>Session</th>
+                        </tr>
                     </thead>
                     <tbody>
-                        <tr><td>3</td><td>CS3391</td><td>Object Oriented Programming</td><td>26-Nov-25</td><td>Wed</td><td>A.N.</td></tr>
+                        <tr>
+                            <td>3</td>
+                            <td>CS3391</td>
+                            <td>Object Oriented Programming</td>
+                            <td>26-Nov-25</td>
+                            <td>Wed</td>
+                            <td>A.N.</td>
+                        </tr>
                     </tbody>
                 </table>
             </div>
@@ -361,10 +504,24 @@
                 <h3 style="text-align:center;">Semester 2 - April / May 2024</h3>
                 <table>
                     <thead>
-                        <tr><th>Sem</th><th>Subject Code</th><th>Subject Name</th><th>Date</th><th>Day</th><th>Session</th></tr>
+                        <tr>
+                            <th>Sem</th>
+                            <th>Subject Code</th>
+                            <th>Subject Name</th>
+                            <th>Date</th>
+                            <th>Day</th>
+                            <th>Session</th>
+                        </tr>
                     </thead>
                     <tbody>
-                        <tr><td>2</td><td>PH3151</td><td>Physics for Information Science</td><td>12-Dec-25</td><td>Fri</td><td>A.N.</td></tr>
+                        <tr>
+                            <td>2</td>
+                            <td>PH3151</td>
+                            <td>Physics for Information Science</td>
+                            <td>12-Dec-25</td>
+                            <td>Fri</td>
+                            <td>A.N.</td>
+                        </tr>
                     </tbody>
                 </table>
             </div>
@@ -377,25 +534,80 @@
 
             <div class="content-box">
                 <h3 style="text-align:center;">Semester 1 - Nov / Dec Examination, 2023</h3>
-                <div class="info">
-                    <div><strong>Register Number:</strong> 960923104020</div>
-                    <div><strong>Name:</strong> VIBIN I</div>
-                    <div><strong>Branch:</strong> B.E. Computer Science and Engineering</div>
-                </div>
                 <table>
                     <thead>
-                        <tr><th>Semester</th><th>Subject Code</th><th>Subject Name</th><th>Grade</th><th>Result</th></tr>
+                        <tr>
+                            <th>Semester</th>
+                            <th>Subject Code</th>
+                            <th>Subject Name</th>
+                            <th>Grade</th>
+                            <th>Result</th>
+                        </tr>
                     </thead>
                     <tbody>
-                        <tr><td>01</td><td>BS3171</td><td>Physics and Chemistry Laboratory</td><td>O</td><td class="pass">PASS</td></tr>
-                        <tr><td>01</td><td>CY3151</td><td>Engineering Chemistry</td><td>B+</td><td class="pass">PASS</td></tr>
-                        <tr><td>01</td><td>GE3151</td><td>Problem Solving and Python Programming</td><td>B+</td><td class="pass">PASS</td></tr>
-                        <tr><td>01</td><td>GE3252</td><td>Heritage of Tamils</td><td>B+</td><td class="pass">PASS</td></tr>
-                        <tr><td>01</td><td>GE3171</td><td>Problem Solving and Python Programming Laboratory</td><td>O</td><td class="pass">PASS</td></tr>
-                        <tr><td>01</td><td>GE3272</td><td>English Laboratory</td><td>O</td><td class="pass">PASS</td></tr>
-                        <tr><td>01</td><td>HS3152</td><td>Professional English - I</td><td>B+</td><td class="pass">PASS</td></tr>
-                        <tr><td>01</td><td>MA3151</td><td>Matrices and Calculus</td><td>B+</td><td class="pass">PASS</td></tr>
-                        <tr><td>01</td><td>PH3151</td><td>Engineering Physics</td><td>U</td><td class="ra">RA</td></tr>
+                        <tr>
+                            <td>01</td>
+                            <td>BS3171</td>
+                            <td>Physics and Chemistry Laboratory</td>
+                            <td>O</td>
+                            <td class="pass">PASS</td>
+                        </tr>
+                        <tr>
+                            <td>01</td>
+                            <td>CY3151</td>
+                            <td>Engineering Chemistry</td>
+                            <td>B+</td>
+                            <td class="pass">PASS</td>
+                        </tr>
+                        <tr>
+                            <td>01</td>
+                            <td>GE3151</td>
+                            <td>Problem Solving and Python Programming</td>
+                            <td>B+</td>
+                            <td class="pass">PASS</td>
+                        </tr>
+                        <tr>
+                            <td>01</td>
+                            <td>GE3252</td>
+                            <td>Heritage of Tamils</td>
+                            <td>B+</td>
+                            <td class="pass">PASS</td>
+                        </tr>
+                        <tr>
+                            <td>01</td>
+                            <td>GE3171</td>
+                            <td>Problem Solving and Python Programming Laboratory</td>
+                            <td>O</td>
+                            <td class="pass">PASS</td>
+                        </tr>
+                        <tr>
+                            <td>01</td>
+                            <td>GE3272</td>
+                            <td>English Laboratory</td>
+                            <td>O</td>
+                            <td class="pass">PASS</td>
+                        </tr>
+                        <tr>
+                            <td>01</td>
+                            <td>HS3152</td>
+                            <td>Professional English - I</td>
+                            <td>B+</td>
+                            <td class="pass">PASS</td>
+                        </tr>
+                        <tr>
+                            <td>01</td>
+                            <td>MA3151</td>
+                            <td>Matrices and Calculus</td>
+                            <td>B+</td>
+                            <td class="pass">PASS</td>
+                        </tr>
+                        <tr>
+                            <td>01</td>
+                            <td>PH3151</td>
+                            <td>Engineering Physics</td>
+                            <td>U</td>
+                            <td class="ra">RA</td>
+                        </tr>
                     </tbody>
                 </table>
             </div>
@@ -404,7 +616,7 @@
                 <h3 style="text-align:center;">Semester 2 - April / May Examination, 2024</h3>
                 <p style="text-align:center;">*Details for Semester 2 results would be displayed here.*</p>
             </div>
-            
+
             <div class="content-box">
                 <h3 style="text-align:center;">Semester 3 - Nov / Dec Examination, 2024</h3>
                 <p style="text-align:center;">*Details for Semester 3 results would be displayed here.*</p>
@@ -420,10 +632,10 @@
             <div class="content-box">
                 <h2>🔔 Notifications</h2>
                 <ul style="list-style-type: disc; padding-left: 20px;">
-                    <li>**05 Nov 2025:** Fee payment deadline for current semester approaching.</li>
-                    <li>**20 Oct 2025:** Examination forms for supplementary exams are now available.</li>
-                    <li>**15 Sep 2025:** New academic calendar for 2025-2026 released.</li>
-                    <li>**10 Aug 2025:** Mandatory anti-ragging affidavit submission due.</li>
+                    <li>05 Nov 2025: Fee payment deadline for current semester approaching.</li>
+                    <li>20 Oct 2025: Examination forms for supplementary exams are now available.</li>
+                    <li>15 Sep 2025: New academic calendar for 2025-2026 released.</li>
+                    <li>10 Aug 2025: Mandatory anti-ragging affidavit submission due.</li>
                 </ul>
             </div>
         </div>
@@ -432,14 +644,37 @@
             <div class="content-box">
                 <h2>⬇️ Downloads</h2>
                 <ul style="list-style-type: none; padding: 0;">
-                    <li><a href="#" style="text-decoration: none; color: #007bff; display: block; margin-bottom: 8px;">&#128196; Download Semester 5 Exam Schedule (PDF)</a></li>
-                    <li><a href="#" style="text-decoration: none; color: #007bff; display: block; margin-bottom: 8px;">&#128196; Download Official Semester 1 Mark Sheet (PDF)</a></li>
-                    <li><a href="#" style="text-decoration: none; color: #007bff; display: block; margin-bottom: 8px;">&#128196; Syllabus for Computer Networks (CS3591)</a></li>
-                    <li><a href="#" style="text-decoration: none; color: #007bff; display: block; margin-bottom: 8px;">&#128196; Academic Year 2025-2026 Calendar</a></li>
+                    <li><a href="pdf/Nov _ Dec 2023 Timetable.pdf"
+                            style="text-decoration: none; color: #007bff; display: block; margin-bottom: 8px;"
+                            target="_blank">&#128196; Download Nov / Dec 2023 Timetable (PDF)</a></li>
+                    <li><a href="pdf/Nov _ Dec 2023 Result.pdf"
+                            style="text-decoration: none; color: #007bff; display: block; margin-bottom: 8px;"
+                            target="_blank">&#128196; Download Nov / Dec 2023 Result (PDF)</a></li>
+                    <li><a href="pdf/Apr _ May 2024 Timetable.pdf"
+                            style="text-decoration: none; color: #007bff; display: block; margin-bottom: 8px;"
+                            target="_blank">&#128196; Download Apr / May 2024 Timetable (PDF)</a></li>
+                    <li><a href="pdf/Apr _ May 2024 Result.pdf"
+                            style="text-decoration: none; color: #007bff; display: block; margin-bottom: 8px;"
+                            target="_blank">&#128196; Download Apr / May 2024 Result (PDF)</a></li>
+                    <li><a href="pdf/Nov _ Dec 2024 Timetable.pdf"
+                            style="text-decoration: none; color: #007bff; display: block; margin-bottom: 8px;"
+                            target="_blank">&#128196; Download Nov / Dec 2024 Timetable (PDF)</a></li>
+                    <li><a href="pdf/Nov _ Dec 2024 Result.pdf"
+                            style="text-decoration: none; color: #007bff; display: block; margin-bottom: 8px;"
+                            target="_blank">&#128196; Download Nov / Dec 2024 Result (PDF)</a></li>
+                    <li><a href="pdf/Apr _ May 2025 Timetable.pdf"
+                            style="text-decoration: none; color: #007bff; display: block; margin-bottom: 8px;"
+                            target="_blank">&#128196; Download Apr / May 2025 Timetable (PDF) </a></li>
+                    <li><a href="pdf/Apr _ May 2025 Result.pdf"
+                            style="text-decoration: none; color: #007bff; display: block; margin-bottom: 8px;"
+                            target="_blank">&#128196; Download Apr / May 2025 Result (PDF)</a></li>
+                    <li><a href="pdf/Nov _ Dec 2025 Timetable.pdf"
+                            style="text-decoration: none; color: #007bff; display: block; margin-bottom: 8px;"
+                            target="_blank">&#128196; Download Nov / Dec 2025 Timetable (PDF)</a></li>
                 </ul>
             </div>
         </div>
-        
+
     </div>
 
     <script>
@@ -452,11 +687,11 @@
         const user = localStorage.getItem("username");
         if (loggedIn !== "true") {
             // window.location.href = "home.html"; // Uncomment and adjust as needed
-        } 
-        
+        }
+
         // Dynamic user welcome (if you use localStorage)
         if (user && document.getElementById("user-welcome-text")) {
-             document.getElementById("user-welcome-text").innerHTML = 'Welcome **' + user + '** !';
+            document.getElementById("user-welcome-text").innerHTML = 'Welcome ' + user + '!';
         }
 
         function logout(event) {
@@ -465,7 +700,7 @@
             localStorage.removeItem("username");
             window.location.href = "home.html"; // Redirect to login page
         }
-        
+
         // Print functionality
         document.getElementById("printBtn").addEventListener("click", function () {
             window.print();
@@ -505,7 +740,7 @@
                 showContent(contentId);
             });
         });
-        
+
         // Initialize the page by showing the default content (Profile)
         showContent('profile'); 
     </script>
