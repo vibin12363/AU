@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <title>Vibin's Results</title>
+  <link rel="icon" href="resources/download-removebg-preview.png" type="image/x-icon">
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background: #bcc7d6;
+      text-align: center;
+      padding-top: 60px;
+      cursor: url(./resources/shinchan-remow-removebg-preview.png), auto;
+    }
+
+    .menu {
+      justify-content: center;
+      margin-bottom: 20px;
+      gap: 15px;
+      font-size: 1.1em;
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    }
+
+    h1 {
+      color: #003ffe;
+    }
+
+    .containerwel {
+      max-width: 1100px;
+      margin: 0 auto 32px auto;
+      background: #fff;
+      border-radius: 10px;
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.07);
+      padding: 24px;
+      display: flex;
+      gap: 20px;
+
+    }
+
+    .container {
+      max-width: 1100px;
+      margin: 32px auto;
+      background: #fff;
+      border-radius: 10px;
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.07);
+      padding: 24px;
+    }
+
+    #printBtn {
+
+      padding: 10px 20px;
+      font-size: 16px;
+      border-radius: 6px;
+      cursor: pointer;
+
+      bottom: 20px;
+      right: 20px;
+
+
+    }
+
+    #printBtn:hover {
+      background-color: #0056b3;
+    }
+
+    .dot {
+      color: transparent;
+    }
+
+    a {
+      display: block;
+      margin: 15px auto;
+      text-decoration: none;
+      background: #007bff;
+      color: white;
+      padding: 10px 20px;
+      border-radius: 8px;
+      width: 200px;
+      transition: 0.3s;
+    }
+
+    a:hover {
+      background: #a3afbd;
+    }
+
+    .logout {
+      margin-top: 40px;
+      background: #ffffff;
+      margin-left: 70%;
+      border-radius: 6px;
+      color: black;
+      border: 2px solid #000000;
+      transition: 0.3s;
+    }
+
+    .logout:hover {
+      background: #b30000;
+    }
+  </style>
+</head>
+
+<body>
+  <div class="containerwel" style="justify-content: center;">
+    <img src="resources/download-removebg-preview.png" alt="Logo" style="width: 100px; height: auto;">
+    <h1>Welcome to Vibin Result page</h1>
+  </div>
+  <p style="text-align: left; padding-left: 160px; font-family: 'Times New Roman', Times, serif; font-size: 1.6em;">
+    <b>Welcome Vibin I !</b>
+  </p>
+  <button id="printBtn" style="margin-left: 800px;">🖨️ Print</button>
+  <a href="#" class="logout" onclick="logout()">🚪Logout</a>
+  <div class="menu" style="display: flex;">
+    <a href="#">Profile</a>
+    <a href="welcome">Exam Schedule</a>
+    <a href="#">Exam Result's</a>
+    <a href="#">Profile</a>
+    <a href="#">Profile</a>
+    
+  </div>
+  <!--<div class="container">
+    <h1 id="welcome"></h1>
+    <div class="dot">.</div>
+    <p style="font-size: 1.4em;">Here are your semester results:</p>
+    <div class="dot">.</div>
+    <a href="Sem 1.html">Semester 1</a>
+    <a href="Sem 2.html">Semester 2</a>
+    <a href="Sem 3.html">Semester 3</a>
+    <a href="Sem 4.html">Semester 4</a>
+
+
+  </div>-->
+
+  <script>
+    document.getElementById("printBtn").addEventListener("click", function () {
+      window.print();
+    });
+
+    // Prevent access if not logged in or if navigating back
+    if (window.performance && window.performance.navigation.type === 2) {
+      window.location.href = "home.html";
+    }
+    const loggedIn = localStorage.getItem("isLoggedIn");
+    const user = localStorage.getItem("username");
+    if (loggedIn !== "true") {
+      window.location.href = "home.html";
+    } else if (document.getElementById("welcome")) {
+      document.getElementById("welcome").textContent = "Welcome " + user + "!";
+    }
+
+    // Logout function (if needed)
+    function logout() {
+      localStorage.removeItem("isLoggedIn");
+      localStorage.removeItem("username");
+      window.location.href = "home.html";
+    }
+  </script>
+</body>
+
+</html>

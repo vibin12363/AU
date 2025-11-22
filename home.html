@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <title>Vibin's Result Page</title>
+  <link rel="icon" href="resources/download-removebg-preview.png" type="image/x-icon">
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background: linear-gradient(135deg, #6dd5fa, #ff00d9);
+      color: #333;
+      height: 100vh;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+
+    .box {
+      background: #99ff00;
+      padding: 30px;
+      border-radius: 15px;
+      box-shadow: 0 0 15px rgba(223, 15, 15, 0.3);
+      text-align: center;
+      width: 320px;
+    }
+
+    input {
+      width: 90%;
+      padding: 10px;
+      margin: 10px 0;
+      border-radius: 5px;
+      border: 1px solid #6d0000;
+    }
+
+    button {
+      background: #ff0000;
+      color: white;
+      border: none;
+      padding: 10px 20px;
+      border-radius: 5px;
+      cursor: pointer;
+    }
+
+    button:hover {
+      background: #03beed;
+    }
+
+    #error {
+      color: red;
+      margin-top: 10px;
+    }
+  </style>
+</head>
+
+<body>
+  <div class="box">
+    <h2>Vibin's Result Page</h2>
+    <form id="loginForm">
+      <input type="text" id="reg" placeholder="Register Number">
+      <input type="date" id="dob">
+      <button type="submit">Login</button>
+    </form>
+    <p id="error"></p>
+  </div>
+
+  <script>
+    window.history.pushState(null, "", window.location.href);
+    window.onpopstate = function () {
+      window.location.href = "home.html";
+    };
+    function checkLogin(e) {
+      if (e) e.preventDefault(); // Prevent form reload
+      const reg = document.getElementById("reg").value.trim();
+      const dob = document.getElementById("dob").value;
+
+      const correctReg = "960923104020";
+      const correctDob = "2006-07-29";
+
+      if (reg === correctReg && dob === correctDob) {
+        localStorage.setItem("isLoggedIn", "true");
+        localStorage.setItem("username", "Vibin");
+        window.location.href = "spa.html";
+      } else {
+        document.getElementById("error").textContent = "Invalid Register Number or DOB!";
+      }
+    }
+
+    document.getElementById("loginForm").addEventListener("submit", checkLogin);
+    
+  </script>
+</body>
+
+</html>

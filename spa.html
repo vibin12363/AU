@@ -1,0 +1,514 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Vibin's Dashboard</title>
+    <link rel="icon" href="resources/download-removebg-preview.png" type="image/x-icon">
+    <style>
+        /* General Styles */
+        body {
+            font-family: 'Segoe UI', Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background: #f8f9fa; /* Light grey background */
+            color: #222;
+        }
+
+        /* Persistent Header (Top Section) */
+        .header-container {
+            max-width: 1100px;
+            margin: 0 auto 20px auto;
+            margin-top: 20px;
+            background: #fff;
+            border-radius: 10px;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.07);
+            padding: 15px 24px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between; /* Space out logo/title and buttons */
+        }
+
+        .logo-title-group {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .header-container img {
+            width: 80px;
+            height: auto;
+        }
+
+        .header-container h1 {
+            color: #003ffe;
+            font-size: 1.8em;
+            margin: 0;
+        }
+
+        .user-welcome {
+            text-align: left;
+            padding-left: 10px;
+            font-family: 'Times New Roman', Times, serif;
+            font-size: 1.4em;
+            font-weight: bold;
+            color: #333;
+        }
+
+        /* Print and Logout Buttons */
+        .action-buttons {
+            display: flex;
+            gap: 10px;
+            align-items: center;
+        }
+
+        #printBtn, .logout-btn {
+            padding: 8px 15px;
+            font-size: 14px;
+            border-radius: 6px;
+            cursor: pointer;
+            border: 1px solid #ccc;
+            transition: 0.3s;
+        }
+
+        #printBtn {
+            background-color: #f0f0f0;
+            color: #333;
+        }
+
+        .action-buttons-moved {
+            max-width: 1100px;
+            margin: 0 auto; /* Center the container */
+            display: flex;
+            justify-content: flex-end; /* Push content to the right */
+            gap: 10px;
+            padding-right: 24px; /* Align with container padding */
+            margin-top: -30px; /* Optional: Pull buttons up slightly closer to welcome text */
+            margin-bottom: 20px;
+        }
+
+        .logout-btn {
+            background-color: #ffffff;
+            color: #000;
+            border: 2px solid #000000;
+            text-decoration: none;
+        }
+
+        .logout-btn:hover {
+            background: #b30000;
+            color: white;
+            border-color: #b30000;
+        }
+
+        /* Navigation Menu */
+        .menu {
+            max-width: 1100px;
+            margin: 20px auto;
+            display: flex;
+            justify-content: center;
+            gap: 10px;
+            font-size: 1.0em;
+            padding: 0 10px;
+        }
+
+        .menu-btn {
+            text-decoration: none;
+            background: #007bff; /* Default blue color */
+            color: white;
+            padding: 10px 15px;
+            border-radius: 8px;
+            transition: 0.3s;
+            cursor: pointer;
+            flex-grow: 1;
+            text-align: center;
+            max-width: 180px;
+            font-weight: bold;
+        }
+
+        .menu-btn:hover {
+            background: #a3afbd;
+        }
+
+        .menu-btn.active {
+            background: #003ffe; /* Selected color - darker blue */
+            box-shadow: 0 0 10px rgba(0, 63, 254, 0.5);
+        }
+
+        /* Main Content Area */
+        #content-area {
+            max-width: 1100px;
+            min-height: 400px; /* Ensure content box is visible */
+            margin: 20px auto;
+            background: #fff;
+            border-radius: 10px;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.07);
+            padding: 30px;
+            text-align: left;
+        }
+        
+        /* Content Box Styling (for results/schedule inside content-area) */
+        .content-box {
+            padding: 24px;
+            margin-bottom: 20px;
+            border: 1px solid #e0e0e0;
+            border-radius: 8px;
+            box-shadow: 0 1px 4px rgba(0, 0, 0, 0.05);
+        }
+        
+        .content-box h2 {
+            text-align: center;
+            color: #2d6cdf;
+            margin-bottom: 20px;
+        }
+
+        /* Result/Schedule Specific Styles */
+        .info {
+            margin-bottom: 20px;
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px 30px;
+            font-size: 1em;
+        }
+
+        .info strong {
+            color: #444;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 15px;
+        }
+
+        th, td {
+            border: 1px solid #d1d5db;
+            padding: 10px 8px;
+            text-align: center;
+        }
+
+        th {
+            background: #e3eafc;
+            color: #1a237e;
+        }
+
+        tr:nth-child(even) {
+            background: #f4f7fb;
+        }
+
+        .ra {
+            color: #d32f2f; /* Red for Re-Appear */
+            font-weight: bold;
+        }
+
+        .pass {
+            color: #388e3c; /* Green for Pass */
+            font-weight: bold;
+        }
+
+        /* Responsive Design */
+        @media (max-width: 900px) {
+            .header-container, .menu, #content-area {
+                max-width: 95%;
+            }
+            .header-container {
+                flex-direction: column;
+            }
+            .logo-title-group {
+                margin-bottom: 10px;
+            }
+            .user-welcome {
+                padding-left: 0;
+                text-align: center;
+                margin-bottom: 10px;
+            }
+            
+            .action-buttons-moved {
+                padding-right: 5%; /* Adjust padding for smaller screens */
+            }
+        }
+
+        @media (max-width: 650px) {
+            
+            .menu {
+                /* We ensure it stays row-based and allows wrapping */
+                flex-direction: row; 
+                flex-wrap: wrap; /* Add this to prevent overflow if they don't all fit */
+                gap: 5px;
+            }
+            
+            .menu-btn {
+                /* Instead of max-width: 100%, let them share the space */
+                padding: 8px 10px; /* Adjust padding to save space */
+                font-size: 0.85em; /* Reduce font size */
+                /* Remove max-width so they all try to fit on one line */
+            }
+
+            th, td {
+                font-size: 0.8em;
+                padding: 5px 3px;
+            }
+            .info {
+                flex-direction: column;
+                gap: 10px;
+            }
+
+            .action-buttons-moved {
+                padding-top: 10%; /* Adjust padding for smaller screens */
+
+            }
+            /* If the buttons still don't fit horizontally, you must choose 
+               between letting them wrap or forcing them to stack. 
+               The current desktop view style with 5 buttons may not 
+               fit horizontally on a very small phone screen. */
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="header-container">
+        <div class="logo-title-group">
+            <img src="resources/download-removebg-preview.png" alt="Logo">
+            <h1>Welcome to Vibin Result page</h1>
+        </div>
+    </div>
+
+    <p class="user-welcome" id="user-welcome-text">
+        Welcome **Vibin I** !
+    </p>
+
+<div class="action-buttons-moved">
+        <button id="printBtn">🖨️ Print</button>
+        <a href="home.html" class="logout-btn" onclick="logout(event)">🚪Logout</a>
+    </div>
+    
+    <div class="menu">
+        <div class="menu-btn active" data-content-id="profile">Profile</div>
+        <div class="menu-btn" data-content-id="schedule">Exam Schedule</div>
+        <div class="menu-btn" data-content-id="results">Exam Result's</div>
+        <div class="menu-btn" data-content-id="notifications">Notifications</div>
+        <div class="menu-btn" data-content-id="downloads">Downloads</div>
+    </div>
+
+    <div id="content-area">
+        <div id="profile-content" class="content-section">
+            <div class="content-box">
+                <h2>👤 Your Profile</h2>
+                <p>Welcome to your academic dashboard. Use the menu above to navigate your results and schedule.</p>
+                <div class="info">
+                    <div><strong>Register Number:</strong> 960923104020</div>
+                    <div><strong>Name:</strong> VIBIN I</div>
+                    <div><strong>Branch:</strong> B.E. Computer Science and Engineering</div>
+                </div>
+                <p>This section can be expanded to show personal details, attendance records, etc.</p>
+            </div>
+        </div>
+
+        <div id="schedule-content" class="content-section" style="display:none;">
+            <h2>📅 Exam Schedule</h2>
+
+            <div class="content-box">
+                <h3 style="text-align:center;">Semester 5 - Nov / Dec 2025</h3>
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Sem</th>
+                            <th>Subject Code</th>
+                            <th>Subject Name</th>
+                            <th>Date</th>
+                            <th>Day</th>
+                            <th>Session</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr><td>5</td><td>CB3491</td><td>Cryptography and Cyber Security</td><td>20-Nov-25</td><td>Thu</td><td>F.N.</td></tr>
+                        <tr><td>5</td><td>CS3591</td><td>Computer Networks</td><td>22-Nov-25</td><td>Sat</td><td>F.N.</td></tr>
+                        <tr><td>5</td><td>CS3501</td><td>Compiler Design</td><td>25-Nov-25</td><td>Tue</td><td>F.N.</td></tr>
+                        <tr><td>5</td><td>CS3551</td><td>Distributed Computing</td><td>27-Nov-25</td><td>Thu</td><td>F.N.</td></tr>
+                        <tr><td>5</td><td>CCS375</td><td>Web Technologies</td><td>29-Nov-25</td><td>Sat</td><td>F.N.</td></tr>
+                        <tr><td>5</td><td>CCS341</td><td>Data Warehousing</td><td>5-Dec-25</td><td>Fri</td><td>F.N.</td></tr>
+                    </tbody>
+                </table>
+            </div>
+            
+            <div class="content-box">
+                <h3 style="text-align:center;">Semester 4 - April / May 2025</h3>
+                <table>
+                    <thead>
+                        <tr><th>Sem</th><th>Subject Code</th><th>Subject Name</th><th>Date</th><th>Day</th><th>Session</th></tr>
+                    </thead>
+                    <tbody>
+                        <tr><td>4</td><td>GE3451</td><td>Environmental Sciences and Sustainability</td><td>29-Nov-25</td><td>Sat</td><td>A.N.</td></tr>
+                        <tr><td>4</td><td>CS3492</td><td>Database Management Systems</td><td>01-Dec-25</td><td>Mon</td><td>A.N.</td></tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <div class="content-box">
+                <h3 style="text-align:center;">Semester 3 - Nov / Dec 2024</h3>
+                <table>
+                    <thead>
+                        <tr><th>Sem</th><th>Subject Code</th><th>Subject Name</th><th>Date</th><th>Day</th><th>Session</th></tr>
+                    </thead>
+                    <tbody>
+                        <tr><td>3</td><td>CS3391</td><td>Object Oriented Programming</td><td>26-Nov-25</td><td>Wed</td><td>A.N.</td></tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <div class="content-box">
+                <h3 style="text-align:center;">Semester 2 - April / May 2024</h3>
+                <table>
+                    <thead>
+                        <tr><th>Sem</th><th>Subject Code</th><th>Subject Name</th><th>Date</th><th>Day</th><th>Session</th></tr>
+                    </thead>
+                    <tbody>
+                        <tr><td>2</td><td>PH3151</td><td>Physics for Information Science</td><td>12-Dec-25</td><td>Fri</td><td>A.N.</td></tr>
+                    </tbody>
+                </table>
+            </div>
+
+        </div>
+
+
+        <div id="results-content" class="content-section" style="display:none;">
+            <h2>📜 Exam Results</h2>
+
+            <div class="content-box">
+                <h3 style="text-align:center;">Semester 1 - Nov / Dec Examination, 2023</h3>
+                <div class="info">
+                    <div><strong>Register Number:</strong> 960923104020</div>
+                    <div><strong>Name:</strong> VIBIN I</div>
+                    <div><strong>Branch:</strong> B.E. Computer Science and Engineering</div>
+                </div>
+                <table>
+                    <thead>
+                        <tr><th>Semester</th><th>Subject Code</th><th>Subject Name</th><th>Grade</th><th>Result</th></tr>
+                    </thead>
+                    <tbody>
+                        <tr><td>01</td><td>BS3171</td><td>Physics and Chemistry Laboratory</td><td>O</td><td class="pass">PASS</td></tr>
+                        <tr><td>01</td><td>CY3151</td><td>Engineering Chemistry</td><td>B+</td><td class="pass">PASS</td></tr>
+                        <tr><td>01</td><td>GE3151</td><td>Problem Solving and Python Programming</td><td>B+</td><td class="pass">PASS</td></tr>
+                        <tr><td>01</td><td>GE3252</td><td>Heritage of Tamils</td><td>B+</td><td class="pass">PASS</td></tr>
+                        <tr><td>01</td><td>GE3171</td><td>Problem Solving and Python Programming Laboratory</td><td>O</td><td class="pass">PASS</td></tr>
+                        <tr><td>01</td><td>GE3272</td><td>English Laboratory</td><td>O</td><td class="pass">PASS</td></tr>
+                        <tr><td>01</td><td>HS3152</td><td>Professional English - I</td><td>B+</td><td class="pass">PASS</td></tr>
+                        <tr><td>01</td><td>MA3151</td><td>Matrices and Calculus</td><td>B+</td><td class="pass">PASS</td></tr>
+                        <tr><td>01</td><td>PH3151</td><td>Engineering Physics</td><td>U</td><td class="ra">RA</td></tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <div class="content-box">
+                <h3 style="text-align:center;">Semester 2 - April / May Examination, 2024</h3>
+                <p style="text-align:center;">*Details for Semester 2 results would be displayed here.*</p>
+            </div>
+            
+            <div class="content-box">
+                <h3 style="text-align:center;">Semester 3 - Nov / Dec Examination, 2024</h3>
+                <p style="text-align:center;">*Details for Semester 3 results would be displayed here.*</p>
+            </div>
+
+            <div class="content-box">
+                <h3 style="text-align:center;">Semester 4 - April / May Examination, 2025</h3>
+                <p style="text-align:center;">*Details for Semester 4 results would be displayed here.*</p>
+            </div>
+        </div>
+
+        <div id="notifications-content" class="content-section" style="display:none;">
+            <div class="content-box">
+                <h2>🔔 Notifications</h2>
+                <ul style="list-style-type: disc; padding-left: 20px;">
+                    <li>**05 Nov 2025:** Fee payment deadline for current semester approaching.</li>
+                    <li>**20 Oct 2025:** Examination forms for supplementary exams are now available.</li>
+                    <li>**15 Sep 2025:** New academic calendar for 2025-2026 released.</li>
+                    <li>**10 Aug 2025:** Mandatory anti-ragging affidavit submission due.</li>
+                </ul>
+            </div>
+        </div>
+
+        <div id="downloads-content" class="content-section" style="display:none;">
+            <div class="content-box">
+                <h2>⬇️ Downloads</h2>
+                <ul style="list-style-type: none; padding: 0;">
+                    <li><a href="#" style="text-decoration: none; color: #007bff; display: block; margin-bottom: 8px;">&#128196; Download Semester 5 Exam Schedule (PDF)</a></li>
+                    <li><a href="#" style="text-decoration: none; color: #007bff; display: block; margin-bottom: 8px;">&#128196; Download Official Semester 1 Mark Sheet (PDF)</a></li>
+                    <li><a href="#" style="text-decoration: none; color: #007bff; display: block; margin-bottom: 8px;">&#128196; Syllabus for Computer Networks (CS3591)</a></li>
+                    <li><a href="#" style="text-decoration: none; color: #007bff; display: block; margin-bottom: 8px;">&#128196; Academic Year 2025-2026 Calendar</a></li>
+                </ul>
+            </div>
+        </div>
+        
+    </div>
+
+    <script>
+        // --- Security and Logout Functions ---
+        // Prevent access if not logged in (Keep your original security checks)
+        if (window.performance && window.performance.navigation.type === 2) {
+            // window.location.href = "home.html"; // Uncomment and adjust as needed
+        }
+        const loggedIn = localStorage.getItem("isLoggedIn");
+        const user = localStorage.getItem("username");
+        if (loggedIn !== "true") {
+            // window.location.href = "home.html"; // Uncomment and adjust as needed
+        } 
+        
+        // Dynamic user welcome (if you use localStorage)
+        if (user && document.getElementById("user-welcome-text")) {
+             document.getElementById("user-welcome-text").innerHTML = 'Welcome **' + user + '** !';
+        }
+
+        function logout(event) {
+            event.preventDefault(); // Prevent default link behavior
+            localStorage.removeItem("isLoggedIn");
+            localStorage.removeItem("username");
+            window.location.href = "home.html"; // Redirect to login page
+        }
+        
+        // Print functionality
+        document.getElementById("printBtn").addEventListener("click", function () {
+            window.print();
+        });
+
+
+        // --- Dynamic Content Loading and Button Highlighting ---
+        const menuButtons = document.querySelectorAll('.menu-btn');
+        const contentSections = document.querySelectorAll('.content-section');
+        const contentArea = document.getElementById('content-area');
+
+        function showContent(contentId) {
+            // 1. Hide all content sections
+            contentSections.forEach(section => {
+                section.style.display = 'none';
+            });
+
+            // 2. Show the selected content section
+            const selectedSection = document.getElementById(contentId + '-content');
+            if (selectedSection) {
+                selectedSection.style.display = 'block';
+            }
+
+            // 3. Update active state of buttons
+            menuButtons.forEach(button => {
+                button.classList.remove('active');
+                if (button.getAttribute('data-content-id') === contentId) {
+                    button.classList.add('active');
+                }
+            });
+        }
+
+        // Add click event listeners to menu buttons
+        menuButtons.forEach(button => {
+            button.addEventListener('click', () => {
+                const contentId = button.getAttribute('data-content-id');
+                showContent(contentId);
+            });
+        });
+        
+        // Initialize the page by showing the default content (Profile)
+        showContent('profile'); 
+    </script>
+</body>
+
+</html>
