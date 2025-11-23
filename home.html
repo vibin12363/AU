@@ -93,9 +93,9 @@
 <body>
     <div class="login-box">
         <img src="resources/download-removebg-preview.png" alt="Logo" class="logo">
-        <h2>Vibin's Dashboard Login</h2>
+        <h2>Vibin's Result Page</h2>
         <form id="loginForm">
-            <input type="text" id="reg" placeholder="Register Number" required>
+            <input id="reg" placeholder="Register Number" required>
             <input type="date" id="dob" required>
             <button type="submit">Login</button>
         </form>
@@ -126,7 +126,7 @@
                 localStorage.setItem("username", correctUsername);
                 
                 // Redirect to the main dashboard page
-                window.location.href = "spa.html"; // Ensure this matches your dashboard file name!
+                window.location.href = "SPA.html"; // Ensure this matches your dashboard file name!
 
             } else {
                 document.getElementById("error").textContent = "Invalid Register Number or DOB!";
