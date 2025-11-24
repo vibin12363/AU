@@ -146,6 +146,11 @@
         }
 
         document.getElementById("loginForm").addEventListener("submit", checkLogin);
+        // Example JavaScript for successful login (inside home.html)
+        if (loginSuccessful) {
+            // Redirect to the protected dashboard page (SPA.html)
+            window.location.href = 'SPA.html';
+        }
     </script>
 </body>
 
