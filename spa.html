@@ -1335,7 +1335,8 @@
         <div id="downloads-content" class="content-section" style="display:none;">
             <div class="content-box">
                 <h2>⬇️ Downloads</h2>
-                <p class="desc">Click the links below to download the respective timetables and results in PDF format:</p>
+                <p class="desc">Click the links below to download the respective timetables and results in PDF format:
+                </p>
                 <p class="all">All Semester Timetables &#128071;</p>
                 <ul class="ul" style="list-style-type: none; padding: 0;">
                     <li><a href="pdf/Nov _ Dec 2023 Timetable.pdf"
@@ -1375,39 +1376,50 @@
     </div>
 
     <script>
-        // --- Security and Logout Functions ---
-        // Prevent access if not logged in (Keep your original security checks)
+        // --- Security and Initialization Check (Must run first) ---
+
+        // 1. Check for Back/Forward Button Cache access (Security against BFCache)
         if (window.performance && window.performance.navigation.type === 2) {
-            window.location.href = "home.html"; // Uncomment and adjust as needed
-        }
-        const loggedIn = localStorage.getItem("isLoggedIn");
-        const user = localStorage.getItem("username");
-        if (loggedIn !== "true") {
-            window.location.href = "home.html"; // Uncomment and adjust as needed
+            window.location.href = "home.html";
         }
 
-        // Dynamic user welcome (if you use localStorage)
+        // 2. Check Login Status (Core Security Gate)
+        const loggedIn = localStorage.getItem("isLoggedIn");
+        const user = localStorage.getItem("username");
+
+        if (loggedIn !== "true") {
+            // If NOT logged in, redirect immediately to the login page
+            window.location.href = "home.html";
+        }
+
+        // 3. Dynamic User Welcome
         if (user && document.getElementById("user-welcome-text")) {
             document.getElementById("user-welcome-text").innerHTML = 'Welcome ' + user + ' !';
         }
 
+        // --- Logout Function ---
         function logout(event) {
-            event.preventDefault(); // Prevent default link behavior
+            event.preventDefault(); // Stop the link from navigating by default
             localStorage.removeItem("isLoggedIn");
             localStorage.removeItem("username");
             window.location.href = "home.html"; // Redirect to login page
         }
+
+        // 4. Attach logout function to the element (assuming there is a logout link/button with an ID)
+        // You may need to replace 'logout-link-id' with the actual ID of your logout element
+        // Example: document.getElementById("logout-link-id").addEventListener("click", logout);
+
+        // --- Dashboard Functionality (Print, Content Loading) ---
 
         // Print functionality
         document.getElementById("printBtn").addEventListener("click", function () {
             window.print();
         });
 
-
-        // --- Dynamic Content Loading and Button Highlighting ---
+        // Dynamic Content Loading and Button Highlighting
         const menuButtons = document.querySelectorAll('.menu-btn');
         const contentSections = document.querySelectorAll('.content-section');
-        const contentArea = document.getElementById('content-area');
+        const contentArea = document.getElementById('content-area'); // Not used, but kept for context
 
         function showContent(contentId) {
             // 1. Hide all content sections
