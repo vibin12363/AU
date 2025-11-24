@@ -1378,12 +1378,12 @@
         // --- Security and Logout Functions ---
         // Prevent access if not logged in (Keep your original security checks)
         if (window.performance && window.performance.navigation.type === 2) {
-            //window.location.href = "home.html"; // Uncomment and adjust as needed
+            window.location.href = "home.html"; // Uncomment and adjust as needed
         }
         const loggedIn = localStorage.getItem("isLoggedIn");
         const user = localStorage.getItem("username");
         if (loggedIn !== "true") {
-            // window.location.href = "home.html"; // Uncomment and adjust as needed
+            window.location.href = "home.html"; // Uncomment and adjust as needed
         }
 
         // Dynamic user welcome (if you use localStorage)
