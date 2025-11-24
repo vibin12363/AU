@@ -12,7 +12,8 @@
             font-family: 'Segoe UI', Arial, sans-serif;
             margin: 0;
             padding: 0;
-            background: #f8f9fa; /* Light grey background from dashboard */
+            background: #f8f9fa;
+            /* Light grey background from dashboard */
             color: #222;
             height: 100vh;
             display: flex;
@@ -22,26 +23,30 @@
 
         /* Login Box Styling matching Dashboard Containers */
         .login-box {
-            background: #fff; /* White background from dashboard containers */
+            background: #fff;
+            /* White background from dashboard containers */
             padding: 40px;
             border-radius: 10px;
-            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1); /* Subtle shadow */
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+            /* Subtle shadow */
             text-align: center;
             width: 90%;
-            max-width: 350px; /* Max width for responsiveness */
+            max-width: 350px;
+            /* Max width for responsiveness */
             transition: box-shadow 0.3s ease;
         }
-        
+
         .login-box:hover {
             box-shadow: 0 6px 16px rgba(0, 0, 0, 0.15);
         }
 
         .login-box h2 {
-            color: #003ffe; /* Blue color from dashboard header */
+            color: #003ffe;
+            /* Blue color from dashboard header */
             margin-bottom: 25px;
             font-size: 1.8em;
         }
-        
+
         /* Logo Styling */
         .logo {
             width: 80px;
@@ -50,23 +55,28 @@
         }
 
         input {
-            width: 100%; /* Full width within the box */
-            box-sizing: border-box; /* Include padding and border in the element's total width and height */
+            width: 100%;
+            /* Full width within the box */
+            box-sizing: border-box;
+            /* Include padding and border in the element's total width and height */
             padding: 12px;
             margin: 10px 0;
             border-radius: 6px;
-            border: 1px solid #d1d5db; /* Light grey border */
+            border: 1px solid #d1d5db;
+            /* Light grey border */
             font-size: 1em;
             transition: border-color 0.3s;
         }
-        
+
         input:focus {
             border-color: #003ffe;
-            outline: none; /* Remove default focus outline */
+            outline: none;
+            /* Remove default focus outline */
         }
 
         button {
-            background: #007bff; /* Primary blue color (like the menu buttons) */
+            background: #007bff;
+            /* Primary blue color (like the menu buttons) */
             color: white;
             border: none;
             padding: 12px 25px;
@@ -79,11 +89,13 @@
         }
 
         button:hover {
-            background: #0056b3; /* Darker blue on hover */
+            background: #0056b3;
+            /* Darker blue on hover */
         }
 
         #error {
-            color: #d32f2f; /* Red for errors (matching RA color) */
+            color: #d32f2f;
+            /* Red for errors (matching RA color) */
             margin-top: 15px;
             font-weight: bold;
         }
@@ -111,7 +123,7 @@
 
         function checkLogin(e) {
             if (e) e.preventDefault();
-            
+
             const reg = document.getElementById("reg").value.trim();
             const dob = document.getElementById("dob").value;
 
@@ -124,7 +136,7 @@
                 // Store authentication status and username in Local Storage
                 localStorage.setItem("isLoggedIn", "true");
                 localStorage.setItem("username", correctUsername);
-                
+
                 // Redirect to the main dashboard page
                 window.location.href = "SPA.html"; // Ensure this matches your dashboard file name!
 

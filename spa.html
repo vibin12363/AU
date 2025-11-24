@@ -302,7 +302,7 @@
                 padding: 5px 3px;
             }
 
-            
+
             .action-buttons-moved {
                 padding-top: 10%;
                 /* Adjust padding for smaller screens */
@@ -1420,7 +1420,12 @@
         });
 
         // Initialize the page by showing the default content (Profile)
-        showContent('profile'); 
+        showContent('profile');
+        // Example JavaScript for successful login (inside home.html)
+        if (loginSuccessful) {
+            // Redirect to the protected dashboard page (SPA.html)
+            window.location.href = 'SPA.html';
+        }
     </script>
 </body>
 
