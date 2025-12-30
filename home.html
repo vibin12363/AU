@@ -6,100 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Vibin's Dashboard Login</title>
     <link rel="icon" href="resources/download-removebg-preview.png" type="image/x-icon">
-    <style>
-        /* General Styles matching Dashboard background */
-        body {
-            font-family: 'Segoe UI', Arial, sans-serif;
-            margin: 0;
-            padding: 0;
-            background: #f8f9fa;
-            /* Light grey background from dashboard */
-            color: #222;
-            height: 100vh;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-        }
-
-        /* Login Box Styling matching Dashboard Containers */
-        .login-box {
-            background: #fff;
-            /* White background from dashboard containers */
-            padding: 40px;
-            border-radius: 10px;
-            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
-            /* Subtle shadow */
-            text-align: center;
-            width: 90%;
-            max-width: 350px;
-            /* Max width for responsiveness */
-            transition: box-shadow 0.3s ease;
-        }
-
-        .login-box:hover {
-            box-shadow: 0 6px 16px rgba(0, 0, 0, 0.15);
-        }
-
-        .login-box h2 {
-            color: #003ffe;
-            /* Blue color from dashboard header */
-            margin-bottom: 25px;
-            font-size: 1.8em;
-        }
-
-        /* Logo Styling */
-        .logo {
-            width: 80px;
-            height: auto;
-            margin-bottom: 15px;
-        }
-
-        input {
-            width: 100%;
-            /* Full width within the box */
-            box-sizing: border-box;
-            /* Include padding and border in the element's total width and height */
-            padding: 12px;
-            margin: 10px 0;
-            border-radius: 6px;
-            border: 1px solid #d1d5db;
-            /* Light grey border */
-            font-size: 1em;
-            transition: border-color 0.3s;
-        }
-
-        input:focus {
-            border-color: #003ffe;
-            outline: none;
-            /* Remove default focus outline */
-        }
-
-        button {
-            background: #007bff;
-            /* Primary blue color (like the menu buttons) */
-            color: white;
-            border: none;
-            padding: 12px 25px;
-            border-radius: 6px;
-            cursor: pointer;
-            font-size: 1.1em;
-            margin-top: 15px;
-            width: 100%;
-            transition: background 0.3s;
-        }
-
-        button:hover {
-            background: #0056b3;
-            /* Darker blue on hover */
-        }
-
-        #error {
-            color: #d32f2f;
-            /* Red for errors (matching RA color) */
-            margin-top: 15px;
-            font-weight: bold;
-        }
-    </style>
+    <link rel="stylesheet" href="home.css">
 </head>
 
 <body>
@@ -114,51 +21,7 @@
         <p id="error"></p>
     </div>
 
-    <script>
-        // Security: Prevent navigation back to login page after successful login
-        // This line replaces the window.onpopstate check you had, making it cleaner.
-
-        (function () {
-            window.history.replaceState(null, null, window.location.href);
-            window.onpopstate = function () {
-                // If the user tries to go back, they are immediately pushed forward again
-                window.history.pushState(null, null, window.location.href);
-            };
-        })();
-
-
-        // --- Authentication Logic ---
-        function checkLogin(e) {
-            // Prevent the form from submitting the traditional way
-            if (e) e.preventDefault();
-
-            // Get input values (assuming your input IDs are 'reg' and 'dob')
-            const reg = document.getElementById("reg").value.trim();
-            const dob = document.getElementById("dob").value;
-
-            // --- YOUR MASTER AUTHENTICATION DATA ---
-            const correctReg = "960923104020";
-            const correctDob = "2006-07-29";
-            const correctUsername = "Vibin I";
-
-            if (reg === correctReg && dob === correctDob) {
-                // 1. Store the successful status using the flag 'isLoggedIn'
-                localStorage.setItem("isLoggedIn", "true");
-                // 2. Store the username for display on the dashboard
-                localStorage.setItem("username", correctUsername);
-
-                // 3. Redirect to the main dashboard page
-                window.location.href = "spa.html";
-
-            } else {
-                // Display error message
-                document.getElementById("error").textContent = "Invalid Register Number or DOB!";
-            }
-        }
-
-        // Attach the function to the form submission event
-        document.getElementById("loginForm").addEventListener("submit", checkLogin);
-    </script>
+    <script src="home.js"></script>
 </body>
 
 </html>
