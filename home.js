@@ -1,43 +1,45 @@
-// Security: Prevent navigation back to login page after successful login
-        // This line replaces the window.onpopstate check you had, making it cleaner.
+// ── Back/Forward button lock ──────────────────────────────
+(function () {
+    window.history.replaceState(null, null, window.location.href);
+    window.onpopstate = function () {
+        window.history.pushState(null, null, window.location.href);
+    };
+})();
 
-        (function () {
-            window.history.replaceState(null, null, window.location.href);
-            window.onpopstate = function () {
-                // If the user tries to go back, they are immediately pushed forward again
-                window.history.pushState(null, null, window.location.href);
-            };
-        })();
+// ── Hashed credentials ────────────────────────────────────
+// Your actual reg number and DOB are NOT stored here.
+// These are SHA-256 hashes — they cannot be reversed back
+// to the original values. Login still works exactly the same.
+const HASH_REG = "cf4f3d5806846d92b695451d425ed6f72ea9913b020e64fc4cab2d9ae25b8047";
+const HASH_DOB = "a1e14920ac269fda52e49309354117b32aad04937209f478b20ffc0686f566e4";
+const STORED_NAME = "Vibin I";
 
+// ── Hash function (SHA-256 via Web Crypto API) ────────────
+async function sha256(message) {
+    const msgBuffer = new TextEncoder().encode(message);
+    const hashBuffer = await crypto.subtle.digest("SHA-256", msgBuffer);
+    const hashArray  = Array.from(new Uint8Array(hashBuffer));
+    return hashArray.map(b => b.toString(16).padStart(2, "0")).join("");
+}
 
-        // --- Authentication Logic ---
-        function checkLogin(e) {
-            // Prevent the form from submitting the traditional way
-            if (e) e.preventDefault();
+// ── Login handler ─────────────────────────────────────────
+async function checkLogin(e) {
+    e.preventDefault();
 
-            // Get input values (assuming your input IDs are 'reg' and 'dob')
-            const reg = document.getElementById("reg").value.trim();
-            const dob = document.getElementById("dob").value;
+    const reg = document.getElementById("reg").value.trim();
+    const dob = document.getElementById("dob").value;
+    const errEl = document.getElementById("error");
 
-            // --- YOUR MASTER AUTHENTICATION DATA ---
-            const correctReg = "960923104020";
-            const correctDob = "2006-07-29";
-            const correctUsername = "Vibin I";
+    // Hash what the user typed, then compare to stored hashes
+    const [hashReg, hashDob] = await Promise.all([sha256(reg), sha256(dob)]);
 
-            if (reg === correctReg && dob === correctDob) {
-                // 1. Store the successful status using the flag 'isLoggedIn'
-                localStorage.setItem("isLoggedIn", "true");
-                // 2. Store the username for display on the dashboard
-                localStorage.setItem("username", correctUsername);
+    if (hashReg === HASH_REG && hashDob === HASH_DOB) {
+        localStorage.setItem("isLoggedIn", "true");
+        localStorage.setItem("username", STORED_NAME);
+        window.location.href = "spa.html";
+    } else {
+        errEl.textContent = "Invalid Register Number or DOB!";
+    }
+}
 
-                // 3. Redirect to the main dashboard page
-                window.location.href = "spa.html";
-
-            } else {
-                // Display error message
-                document.getElementById("error").textContent = "Invalid Register Number or DOB!";
-            }
-        }
-
-        // Attach the function to the form submission event
-        document.getElementById("loginForm").addEventListener("submit", checkLogin);
+document.getElementById("loginForm").addEventListener("submit", checkLogin);
