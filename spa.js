@@ -1,76 +1,107 @@
-// --- Security and Initialization Check (Must run first) ---
+// ═══════════════════════════════════════════════════════════
+//  SECURITY — Cross-device / cross-browser protection
+//  localStorage does NOT sync between devices or browsers,
+//  so copying the URL to another phone will always redirect
+//  to home.html since that device has no login token.
+// ═══════════════════════════════════════════════════════════
 
-// 1. Check for Back/Forward Button Cache access (Security against BFCache)
-if (window.performance && window.performance.navigation.type === 2) {
-    window.location.href = "home.html";
+function isAuthenticated() {
+    const loggedIn = localStorage.getItem("isLoggedIn");
+    // Additional check: the sessionToken must match
+    // (prevents manually setting localStorage from DevTools on same browser)
+    const lsToken = localStorage.getItem("sessionToken");
+    const ssToken = sessionStorage.getItem("sessionToken");
+    return loggedIn === "true" && lsToken && ssToken && lsToken === ssToken;
 }
 
-// 2. Check Login Status (Core Security Gate)
-const loggedIn = localStorage.getItem("isLoggedIn");
-const user = localStorage.getItem("username");
-
-if (loggedIn !== "true") {
-    // If NOT logged in, redirect immediately to the login page
-    window.location.href = "home.html";
-}
-
-// 3. Dynamic User Welcome
-if (user && document.getElementById("user-welcome-text")) {
-    document.getElementById("user-welcome-text").innerHTML = 'Welcome ' + user + ' !';
-}
-
-// --- Logout Function ---
-function logout(event) {
-    event.preventDefault(); // Stop the link from navigating by default
+function redirectToLogin() {
     localStorage.removeItem("isLoggedIn");
     localStorage.removeItem("username");
-    window.location.href = "home.html"; // Redirect to login page
+    localStorage.removeItem("sessionToken");
+    window.location.replace("home.html");
 }
 
-// 4. Attach logout function to the element (assuming there is a logout link/button with an ID)
-// You may need to replace 'logout-link-id' with the actual ID of your logout element
-// Example: document.getElementById("logout-link-id").addEventListener("click", logout);
+// ── Initial auth check (runs on every page load / URL share) ──
+if (!isAuthenticated()) {
+    redirectToLogin();
+}
 
-// --- Dashboard Functionality (Print, Content Loading) ---
+// ── BFCache (Back/Forward cache) protection ───────────────────
+// Using `pageshow` with `persisted` flag is the modern standard
+window.addEventListener("pageshow", function (e) {
+    if (e.persisted && !isAuthenticated()) {
+        redirectToLogin();
+    }
+});
 
-// Print functionality
+// ── Prevent back-button navigation after logout ───────────────
+window.history.replaceState(null, null, window.location.href);
+window.addEventListener("popstate", function () {
+    window.history.pushState(null, null, window.location.href);
+    if (!isAuthenticated()) redirectToLogin();
+});
+
+// ── Dynamic welcome text ──────────────────────────────────────
+const user    = localStorage.getItem("username");
+const welcomeEl = document.getElementById("user-welcome-text");
+if (user && welcomeEl) {
+    welcomeEl.innerHTML = 'Welcome, <span>' + user + '</span> !';
+}
+
+// ── Logout ────────────────────────────────────────────────────
+function logout(event) {
+    event.preventDefault();
+    localStorage.removeItem("isLoggedIn");
+    localStorage.removeItem("username");
+    localStorage.removeItem("sessionToken");
+    sessionStorage.removeItem("sessionToken");
+    window.location.replace("home.html");
+}
+
+// ── Print ─────────────────────────────────────────────────────
 document.getElementById("printBtn").addEventListener("click", function () {
     window.print();
 });
 
-// Dynamic Content Loading and Button Highlighting
-const menuButtons = document.querySelectorAll('.menu-btn');
+// ═══════════════════════════════════════════════════════════
+//  MAIN NAV — Tab switching
+// ═══════════════════════════════════════════════════════════
+const menuButtons    = document.querySelectorAll('.menu-btn');
 const contentSections = document.querySelectorAll('.content-section');
-const contentArea = document.getElementById('content-area'); // Not used, but kept for context
 
 function showContent(contentId) {
-    // 1. Hide all content sections
-    contentSections.forEach(section => {
-        section.style.display = 'none';
-    });
-
-    // 2. Show the selected content section
-    const selectedSection = document.getElementById(contentId + '-content');
-    if (selectedSection) {
-        selectedSection.style.display = 'block';
-    }
-
-    // 3. Update active state of buttons
-    menuButtons.forEach(button => {
-        button.classList.remove('active');
-        if (button.getAttribute('data-content-id') === contentId) {
-            button.classList.add('active');
+    contentSections.forEach(s => s.style.display = 'none');
+    const target = document.getElementById(contentId + '-content');
+    if (target) target.style.display = 'block';
+    menuButtons.forEach(btn => {
+        btn.classList.remove('active');
+        if (btn.getAttribute('data-content-id') === contentId) {
+            btn.classList.add('active');
         }
     });
 }
 
-// Add click to event listeners to menu buttons
-menuButtons.forEach(button => {
-    button.addEventListener('click', () => {
-        const contentId = button.getAttribute('data-content-id');
-        showContent(contentId);
-    });
+menuButtons.forEach(btn => {
+    btn.addEventListener('click', () => showContent(btn.getAttribute('data-content-id')));
 });
 
-// Initialize the page by showing the default content (Profile)
-showContent('profile');
+showContent('profile'); // default
+
+// ═══════════════════════════════════════════════════════════
+//  GPA | CGPA — Sub-tab switching
+// ═══════════════════════════════════════════════════════════
+const subTabBtns = document.querySelectorAll('.sub-tab-btn');
+const subSections = document.querySelectorAll('.sub-section');
+
+function showSubTab(tabId) {
+    subSections.forEach(s => s.classList.remove('active'));
+    subTabBtns.forEach(b => b.classList.remove('active'));
+    const targetSection = document.getElementById('sub-' + tabId);
+    const targetBtn = document.querySelector(`.sub-tab-btn[data-sub="${tabId}"]`);
+    if (targetSection) targetSection.classList.add('active');
+    if (targetBtn) targetBtn.classList.add('active');
+}
+
+subTabBtns.forEach(btn => {
+    btn.addEventListener('click', () => showSubTab(btn.getAttribute('data-sub')));
+});

@@ -1,92 +1,134 @@
-/* General Styles matching Dashboard background */
+@import url('https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700&display=swap');
+
+* { box-sizing: border-box; margin: 0; padding: 0; }
+
 body {
-    font-family: 'Segoe UI', Arial, sans-serif;
-    margin: 0;
-    padding: 0;
-    background: #f8f9fa;
-    /* Light grey background from dashboard */
-    color: #222;
-    height: 100vh;
+    font-family: 'Outfit', sans-serif;
+    background: linear-gradient(135deg, #0f172a 0%, #1e1b4b 50%, #0f172a 100%);
+    min-height: 100vh;
     display: flex;
     justify-content: center;
     align-items: center;
+    position: relative;
+    overflow: hidden;
 }
 
-/* Login Box Styling matching Dashboard Containers */
+/* Subtle animated background circles */
+body::before, body::after {
+    content: '';
+    position: absolute;
+    border-radius: 50%;
+    opacity: 0.08;
+    animation: pulse 8s ease-in-out infinite;
+}
+body::before {
+    width: 500px; height: 500px;
+    background: #6366f1;
+    top: -150px; left: -150px;
+}
+body::after {
+    width: 400px; height: 400px;
+    background: #06b6d4;
+    bottom: -100px; right: -100px;
+    animation-delay: 4s;
+}
+@keyframes pulse {
+    0%, 100% { transform: scale(1); }
+    50% { transform: scale(1.1); }
+}
+
 .login-box {
-    background: #fff;
-    /* White background from dashboard containers */
-    padding: 40px;
-    border-radius: 10px;
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
-    /* Subtle shadow */
+    background: rgba(255,255,255,0.05);
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+    border: 1px solid rgba(255,255,255,0.12);
+    padding: 44px 40px;
+    border-radius: 20px;
     text-align: center;
     width: 90%;
-    max-width: 350px;
-    /* Max width for responsiveness */
-    transition: box-shadow 0.3s ease;
+    max-width: 380px;
+    position: relative;
+    z-index: 1;
+    animation: slideUp 0.6s cubic-bezier(0.16,1,0.3,1) both;
+}
+@keyframes slideUp {
+    from { opacity: 0; transform: translateY(30px); }
+    to   { opacity: 1; transform: translateY(0); }
 }
 
-.login-box:hover {
-    box-shadow: 0 6px 16px rgba(0, 0, 0, 0.15);
+.logo {
+    width: 70px;
+    height: auto;
+    margin-bottom: 16px;
+    filter: drop-shadow(0 0 16px rgba(99,102,241,0.6));
 }
 
 .login-box h2 {
-    color: #003ffe;
-    /* Blue color from dashboard header */
-    margin-bottom: 25px;
-    font-size: 1.8em;
+    color: #fff;
+    font-size: 1.6em;
+    font-weight: 700;
+    margin-bottom: 28px;
+    letter-spacing: -0.3px;
 }
 
-/* Logo Styling */
-.logo {
-    width: 80px;
-    height: auto;
-    margin-bottom: 15px;
+.login-box h2 span {
+    background: linear-gradient(90deg, #6366f1, #06b6d4);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
 }
 
 input {
     width: 100%;
-    /* Full width within the box */
-    box-sizing: border-box;
-    /* Include padding and border in the element's total width and height */
-    padding: 12px;
-    margin: 10px 0;
-    border-radius: 6px;
-    border: 1px solid #d1d5db;
-    /* Light grey border */
-    font-size: 1em;
-    transition: border-color 0.3s;
+    padding: 13px 16px;
+    margin: 8px 0;
+    border-radius: 10px;
+    border: 1px solid rgba(255,255,255,0.15);
+    background: rgba(255,255,255,0.08);
+    color: #fff;
+    font-family: 'Outfit', sans-serif;
+    font-size: 0.97em;
+    transition: border-color 0.25s, box-shadow 0.25s, background 0.25s;
 }
-
+input::placeholder { color: rgba(255,255,255,0.4); }
 input:focus {
-    border-color: #003ffe;
     outline: none;
-    /* Remove default focus outline */
+    border-color: #6366f1;
+    background: rgba(99,102,241,0.12);
+    box-shadow: 0 0 0 3px rgba(99,102,241,0.2);
+}
+input[type="date"]::-webkit-calendar-picker-indicator {
+    filter: invert(1);
+    opacity: 0.5;
+    cursor: pointer;
 }
 
 button {
-    background: #007bff;
-    /* Primary blue color (like the menu buttons) */
+    background: linear-gradient(135deg, #6366f1, #4f46e5);
     color: white;
     border: none;
-    padding: 12px 25px;
-    border-radius: 6px;
+    padding: 13px 25px;
+    border-radius: 10px;
     cursor: pointer;
-    font-size: 1.1em;
-    margin-top: 15px;
+    font-family: 'Outfit', sans-serif;
+    font-size: 1em;
+    font-weight: 600;
+    margin-top: 18px;
     width: 100%;
-    transition: background 0.3s;
+    letter-spacing: 0.3px;
+    transition: transform 0.2s, box-shadow 0.2s;
+    box-shadow: 0 4px 20px rgba(99,102,241,0.4);
 }
-
 button:hover {
-    background: #0056b3;
-    /* Darker blue on hover */
+    transform: translateY(-2px);
+    box-shadow: 0 8px 28px rgba(99,102,241,0.55);
 }
+button:active { transform: translateY(0); }
 
 #error {
-    color: #d32f2f;
-    /* Red for errors (matching RA color) */
-    margin-top: 15px;
-    font-weight: bold;
+    color: #fb7185;
+    margin-top: 14px;
+    font-size: 0.92em;
+    font-weight: 500;
+    min-height: 20px;
 }

@@ -1,27 +1,23 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Vibin's Dashboard Login</title>
+    <title>Vibin's Dashboard — Login</title>
     <link rel="icon" href="resources/download-removebg-preview.png" type="image/x-icon">
     <link rel="stylesheet" href="home.css">
 </head>
-
 <body>
     <div class="login-box">
         <img src="resources/download-removebg-preview.png" alt="Logo" class="logo">
-        <h2>Vibin's Result Page</h2>
+        <h2>Vibin's <span>Result Page</span></h2>
         <form id="loginForm">
-            <input id="reg" placeholder="Register Number" required>
+            <input id="reg" placeholder="Register Number" autocomplete="off" required>
             <input type="date" id="dob" required>
-            <button type="submit">Login</button>
+            <button type="submit">Login →</button>
         </form>
         <p id="error"></p>
     </div>
-
     <script src="home.js"></script>
 </body>
-
 </html>
