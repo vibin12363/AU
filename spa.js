@@ -1,14 +1,9 @@
 // ═══════════════════════════════════════════════════════════
 //  SECURITY — Cross-device / cross-browser protection
-//  localStorage does NOT sync between devices or browsers,
-//  so copying the URL to another phone will always redirect
-//  to home.html since that device has no login token.
 // ═══════════════════════════════════════════════════════════
 
 function isAuthenticated() {
     const loggedIn = localStorage.getItem("isLoggedIn");
-    // Additional check: the sessionToken must match
-    // (prevents manually setting localStorage from DevTools on same browser)
     const lsToken = localStorage.getItem("sessionToken");
     const ssToken = sessionStorage.getItem("sessionToken");
     return loggedIn === "true" && lsToken && ssToken && lsToken === ssToken;
@@ -18,47 +13,79 @@ function redirectToLogin() {
     localStorage.removeItem("isLoggedIn");
     localStorage.removeItem("username");
     localStorage.removeItem("sessionToken");
+    // Replace entire history so forward button is also dead
     window.location.replace("home.html");
 }
 
-// ── Initial auth check (runs on every page load / URL share) ──
+// ── Initial auth check ────────────────────────────────────
 if (!isAuthenticated()) {
     redirectToLogin();
 }
 
-// ── BFCache (Back/Forward cache) protection ───────────────────
-// Using `pageshow` with `persisted` flag is the modern standard
+// ── BFCache protection (handles forward button cache) ─────
+// If browser restores page from cache, re-verify auth
 window.addEventListener("pageshow", function (e) {
     if (e.persisted && !isAuthenticated()) {
         redirectToLogin();
     }
 });
 
-// ── Prevent back-button navigation after logout ───────────────
-window.history.replaceState(null, null, window.location.href);
-window.addEventListener("popstate", function () {
-    window.history.pushState(null, null, window.location.href);
-    if (!isAuthenticated()) redirectToLogin();
+// ── Visibility change protection ──────────────────────────
+// Catches tab-switching back to this page
+document.addEventListener("visibilitychange", function () {
+    if (document.visibilityState === "visible" && !isAuthenticated()) {
+        redirectToLogin();
+    }
 });
 
-// ── Dynamic welcome text ──────────────────────────────────────
-const user    = localStorage.getItem("username");
+// ── Back / Forward button — block completely ───────────────
+// Push a deep stack of states so user can't press back enough times to escape
+function pushSafetyStack(count) {
+    for (let i = 0; i < count; i++) {
+        window.history.pushState({ spa: true }, "", window.location.href);
+    }
+}
+
+// Push 30 states on load — user would need to press back 30 times
+pushSafetyStack(30);
+
+window.addEventListener("popstate", function () {
+    if (!isAuthenticated()) {
+        redirectToLogin();
+        return;
+    }
+    // Rebuild the safety stack every time back is pressed
+    pushSafetyStack(30);
+    showBackToast();
+});
+
+function showBackToast() {
+    const toast = document.getElementById("back-toast");
+    if (!toast) return;
+    toast.classList.add("show");
+    clearTimeout(toast._timer);
+    toast._timer = setTimeout(() => toast.classList.remove("show"), 3500);
+}
+
+// ── Dynamic welcome text ──────────────────────────────────
+const user = localStorage.getItem("username");
 const welcomeEl = document.getElementById("user-welcome-text");
 if (user && welcomeEl) {
     welcomeEl.innerHTML = 'Welcome, <span>' + user + '</span> !';
 }
 
-// ── Logout ────────────────────────────────────────────────────
+// ── Logout ────────────────────────────────────────────────
 function logout(event) {
     event.preventDefault();
     localStorage.removeItem("isLoggedIn");
     localStorage.removeItem("username");
     localStorage.removeItem("sessionToken");
     sessionStorage.removeItem("sessionToken");
+    // Replace the entire history entry so forward button is disabled
     window.location.replace("home.html");
 }
 
-// ── Print ─────────────────────────────────────────────────────
+// ── Print ─────────────────────────────────────────────────
 document.getElementById("printBtn").addEventListener("click", function () {
     window.print();
 });
@@ -66,7 +93,7 @@ document.getElementById("printBtn").addEventListener("click", function () {
 // ═══════════════════════════════════════════════════════════
 //  MAIN NAV — Tab switching
 // ═══════════════════════════════════════════════════════════
-const menuButtons    = document.querySelectorAll('.menu-btn');
+const menuButtons = document.querySelectorAll('.menu-btn');
 const contentSections = document.querySelectorAll('.content-section');
 
 function showContent(contentId) {
@@ -97,7 +124,7 @@ function showSubTab(tabId) {
     subSections.forEach(s => s.classList.remove('active'));
     subTabBtns.forEach(b => b.classList.remove('active'));
     const targetSection = document.getElementById('sub-' + tabId);
-    const targetBtn = document.querySelector(`.sub-tab-btn[data-sub="${tabId}"]`);
+    const targetBtn = document.querySelector('.sub-tab-btn[data-sub="' + tabId + '"]');
     if (targetSection) targetSection.classList.add('active');
     if (targetBtn) targetBtn.classList.add('active');
 }
