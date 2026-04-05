@@ -14,7 +14,10 @@
         <img src="resources/download-removebg-preview.png" alt="Logo" class="logo">
         <h2>Vibin's <span>Result Page</span></h2>
         <form id="loginForm">
-            <input id="reg" placeholder="Register Number" autocomplete="off" required>
+            <!-- inputmode="numeric" shows number pad on mobile -->
+            <!-- pattern="[0-9]*" reinforces numeric keyboard on iOS -->
+            <input id="reg" placeholder="Register Number" inputmode="numeric" pattern="[0-9]*" autocomplete="off"
+                required>
             <input type="date" id="dob" required>
             <button type="submit">Login →</button>
         </form>
