@@ -14,7 +14,7 @@ function redirectToLogin() {
     localStorage.removeItem("username");
     localStorage.removeItem("sessionToken");
     // Replace entire history so forward button is also dead
-    window.location.replace("home.html");
+    window.location.replace("index.html");
 }
 
 // ── Initial auth check ────────────────────────────────────
@@ -82,7 +82,7 @@ function logout(event) {
     localStorage.removeItem("sessionToken");
     sessionStorage.removeItem("sessionToken");
     // Replace the entire history entry so forward button is disabled
-    window.location.replace("home.html");
+    window.location.replace("index.html");
 }
 
 // ── Print ─────────────────────────────────────────────────
