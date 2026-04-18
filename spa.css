@@ -163,6 +163,52 @@ body {
     transition: all 0.22s;
     user-select: none;
     white-space: nowrap;
+    position: relative;
+    /* anchor for tooltip */
+}
+
+/* ── Tooltip ──────────────────────────────────────────────── */
+.menu-btn::after {
+    content: attr(data-label);
+    /* pull text from data-label attr */
+    position: absolute;
+    bottom: calc(100% + 10px);
+    left: 50%;
+    transform: translateX(-50%) scale(0.85);
+    background: linear-gradient(135deg, var(--primary), var(--accent));
+    color: #fff;
+    font-size: 0.78em;
+    font-weight: 700;
+    letter-spacing: 0.5px;
+    white-space: nowrap;
+    padding: 5px 12px;
+    border-radius: 20px;
+    box-shadow: 0 4px 14px rgba(79, 70, 229, 0.35);
+    pointer-events: none;
+    opacity: 0;
+    transition: opacity 0.18s ease, transform 0.18s ease;
+    z-index: 100;
+}
+
+/* Arrow under tooltip */
+.menu-btn::before {
+    content: '';
+    position: absolute;
+    bottom: calc(100% + 5px);
+    left: 50%;
+    transform: translateX(-50%) scale(0.85);
+    border: 5px solid transparent;
+    border-top-color: var(--primary);
+    pointer-events: none;
+    opacity: 0;
+    transition: opacity 0.18s ease, transform 0.18s ease;
+    z-index: 100;
+}
+
+.menu-btn:hover::after,
+.menu-btn:hover::before {
+    opacity: 1;
+    transform: translateX(-50%) scale(1);
 }
 
 .menu-btn:hover {
@@ -170,6 +216,8 @@ body {
     color: var(--primary);
     transform: translateY(-2px);
     box-shadow: var(--shadow-lg);
+    background: var(--card);
+    /* stay white — no fill on hover */
 }
 
 .menu-btn.active {
@@ -189,6 +237,64 @@ body {
     box-shadow: var(--shadow);
     padding: 32px 28px;
     min-height: 400px;
+}
+
+/* ── Typewriter reveal — applied via JS when tab switches ─── */
+@keyframes typeReveal {
+    from {
+        opacity: 0;
+        clip-path: inset(0 100% 0 0);
+        /* wipes left→right like typing */
+    }
+
+    to {
+        opacity: 1;
+        clip-path: inset(0 0% 0 0);
+    }
+}
+
+@keyframes typeRevealFade {
+    0% {
+        opacity: 0;
+        transform: translateY(6px);
+    }
+
+    100% {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.content-section.type-animate {
+    animation: typeReveal 0.32s cubic-bezier(0.22, 1, 0.36, 1) both;
+}
+
+/* Each child box staggers in */
+.content-section.type-animate .content-box,
+.content-section.type-animate .info,
+.content-section.type-animate h2,
+.content-section.type-animate .sub-tabs {
+    animation: typeRevealFade 0.28s ease both;
+}
+
+.content-section.type-animate .content-box:nth-child(1) {
+    animation-delay: 0.02s;
+}
+
+.content-section.type-animate .content-box:nth-child(2) {
+    animation-delay: 0.07s;
+}
+
+.content-section.type-animate .content-box:nth-child(3) {
+    animation-delay: 0.12s;
+}
+
+.content-section.type-animate .content-box:nth-child(4) {
+    animation-delay: 0.17s;
+}
+
+.content-section.type-animate .content-box:nth-child(5) {
+    animation-delay: 0.22s;
 }
 
 /* ── Content Box ──────────────────────────────────────────── */

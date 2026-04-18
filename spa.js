@@ -4,8 +4,8 @@
 
 function isAuthenticated() {
     const loggedIn = localStorage.getItem("isLoggedIn");
-    const lsToken  = localStorage.getItem("sessionToken");
-    const ssToken  = sessionStorage.getItem("sessionToken");
+    const lsToken = localStorage.getItem("sessionToken");
+    const ssToken = sessionStorage.getItem("sessionToken");
     return loggedIn === "true" && lsToken && ssToken && lsToken === ssToken;
 }
 
@@ -65,7 +65,7 @@ function showBackToast() {
 }
 
 // ── Dynamic welcome text ──────────────────────────────────
-const user      = localStorage.getItem("username");
+const user = localStorage.getItem("username");
 const welcomeEl = document.getElementById("user-welcome-text");
 if (user && welcomeEl) {
     welcomeEl.innerHTML = 'Welcome, <span>' + user + '</span> !';
@@ -89,13 +89,22 @@ document.getElementById("printBtn").addEventListener("click", function () {
 // ═══════════════════════════════════════════════════════════
 //  MAIN NAV — Tab switching
 // ═══════════════════════════════════════════════════════════
-const menuButtons     = document.querySelectorAll('.menu-btn');
+const menuButtons = document.querySelectorAll('.menu-btn');
 const contentSections = document.querySelectorAll('.content-section');
 
 function showContent(contentId) {
-    contentSections.forEach(s => s.style.display = 'none');
+    localStorage.setItem('activeTab', contentId); // remember across refresh
+    contentSections.forEach(s => {
+        s.style.display = 'none';
+        s.classList.remove('type-animate'); // reset animation
+    });
     const target = document.getElementById(contentId + '-content');
-    if (target) target.style.display = 'block';
+    if (target) {
+        target.style.display = 'block';
+        // Force reflow so animation restarts fresh every time
+        void target.offsetWidth;
+        target.classList.add('type-animate');
+    }
     menuButtons.forEach(btn => {
         btn.classList.remove('active');
         if (btn.getAttribute('data-content-id') === contentId) {
@@ -108,21 +117,23 @@ menuButtons.forEach(btn => {
     btn.addEventListener('click', () => showContent(btn.getAttribute('data-content-id')));
 });
 
-showContent('profile');
+// Restore last active tab, fallback to profile
+const lastTab = localStorage.getItem('activeTab') || 'profile';
+showContent(lastTab);
 
 // ═══════════════════════════════════════════════════════════
 //  GPA | CGPA — Sub-tab switching
 // ═══════════════════════════════════════════════════════════
-const subTabBtns  = document.querySelectorAll('.sub-tab-btn');
+const subTabBtns = document.querySelectorAll('.sub-tab-btn');
 const subSections = document.querySelectorAll('.sub-section');
 
 function showSubTab(tabId) {
     subSections.forEach(s => s.classList.remove('active'));
     subTabBtns.forEach(b => b.classList.remove('active'));
     const targetSection = document.getElementById('sub-' + tabId);
-    const targetBtn     = document.querySelector('.sub-tab-btn[data-sub="' + tabId + '"]');
+    const targetBtn = document.querySelector('.sub-tab-btn[data-sub="' + tabId + '"]');
     if (targetSection) targetSection.classList.add('active');
-    if (targetBtn)     targetBtn.classList.add('active');
+    if (targetBtn) targetBtn.classList.add('active');
 }
 
 subTabBtns.forEach(btn => {
