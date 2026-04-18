@@ -21,17 +21,50 @@ if (!isAuthenticated()) {
     redirectToLogin();
 }
 
-// ── BFCache protection ────────────────────────────────────
-window.addEventListener("pageshow", function (e) {
-    if (e.persisted && !isAuthenticated()) {
-        redirectToLogin();
-    }
+// ── Browser close detection ──────────────────────────────
+// When spa.html is hidden (app switched, browser minimised, or closed),
+// save a timestamp. On the next pageshow we measure how long we were away.
+// If it exceeds the threshold we treat it as a browser-close and logout.
+const CLOSE_THRESHOLD_MS = 60 * 1000; // 60 seconds — adjust if needed
+
+window.addEventListener("pagehide", function () {
+    localStorage.setItem("spaHiddenAt", Date.now());
 });
 
-// ── Visibility change (tab switch back) ──────────────────
-document.addEventListener("visibilitychange", function () {
-    if (document.visibilityState === "visible" && !isAuthenticated()) {
+window.addEventListener("pageshow", function (e) {
+    const hiddenAt = parseInt(localStorage.getItem("spaHiddenAt") || "0");
+    const awayMs = Date.now() - hiddenAt;
+
+    // Case 1: restored from BFCache AND away long enough → browser was closed
+    if (e.persisted && hiddenAt && awayMs > CLOSE_THRESHOLD_MS) {
+        localStorage.removeItem("spaHiddenAt");
         redirectToLogin();
+        return;
+    }
+
+    // Case 2: auth tokens gone (other-device / sessionStorage wiped) → redirect
+    if (!isAuthenticated()) {
+        redirectToLogin();
+        return;
+    }
+
+    localStorage.removeItem("spaHiddenAt");
+});
+
+// ── Visibility change (tab switch / focus return) ─────────
+document.addEventListener("visibilitychange", function () {
+    if (document.visibilityState === "visible") {
+        const hiddenAt = parseInt(localStorage.getItem("spaHiddenAt") || "0");
+        const awayMs = Date.now() - hiddenAt;
+
+        if (hiddenAt && awayMs > CLOSE_THRESHOLD_MS) {
+            localStorage.removeItem("spaHiddenAt");
+            redirectToLogin();
+            return;
+        }
+        if (!isAuthenticated()) {
+            redirectToLogin();
+        }
     }
 });
 
@@ -93,7 +126,7 @@ const menuButtons = document.querySelectorAll('.menu-btn');
 const contentSections = document.querySelectorAll('.content-section');
 
 function showContent(contentId) {
-    localStorage.setItem('activeTab', contentId); // remember across refresh
+    sessionStorage.setItem('activeTab', contentId); // remember across refresh
     contentSections.forEach(s => {
         s.style.display = 'none';
         s.classList.remove('type-animate'); // reset animation
@@ -118,7 +151,7 @@ menuButtons.forEach(btn => {
 });
 
 // Restore last active tab, fallback to profile
-const lastTab = localStorage.getItem('activeTab') || 'profile';
+const lastTab = sessionStorage.getItem('activeTab') || 'profile';
 showContent(lastTab);
 
 // ═══════════════════════════════════════════════════════════
