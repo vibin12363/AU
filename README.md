@@ -31,17 +31,20 @@ just clean frontend code deployed via Netlify.
 
 ## 🗂️ Project Structure
 
-├── index.html          # Login page
-├── home.css            # Login page styles
-├── home.js             # Login logic + SHA-256 auth
-├── spa.html            # Dashboard (single-page app)
-├── spa.css             # Dashboard styles
-├── spa.js              # Dashboard logic + security
-├── resources/          # Logo and icons
-├── Timetable/          # Semester timetable PDFs
-├── Result/             # Semester result PDFs
-├── gpa/                # GPA PDFs
-└── cgpa/               # CGPA PDFs
+```
+your-repo/
+├── index.html            # Login page
+├── home.css              # Login page styles
+├── home.js               # Login logic + SHA-256 auth
+├── spa.html              # Dashboard (single-page app)
+├── spa.css               # Dashboard styles
+├── spa.js                # Dashboard logic + security
+├── resources/            # Logo and icons
+├── Timetable/            # Semester timetable PDFs
+├── Result/               # Semester result PDFs
+├── gpa/                  # GPA PDFs
+└── cgpa/                 # CGPA PDFs
+```
 
 ## 🚀 Deployment
 
